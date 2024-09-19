@@ -1,1 +1,1 @@
-# SelfHostSupabase
+# Self-Host Supabase On Server
