@@ -1,3 +1,3 @@
 # Self-Host Supabase On Server
 
-Make sure git and docker, docker compose is installed,
+Make sure git, docker and docker compose is installed.
