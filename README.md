@@ -4,7 +4,7 @@ This guide will walk you through setting up Supabase using Docker on your local 
 
 ## Requirements
 
-- Ubuntu or other Linux distributions
+- Ubuntu or similar Debian Linux distributions
 - Git
 - Docker
 - Docker Compose
