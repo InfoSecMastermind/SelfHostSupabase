@@ -3,8 +3,9 @@
 # Update and upgrade the system
 sudo apt update && sudo apt upgrade -y
 
-# Install Docker
+# Install Dockerb & git
 sudo apt install -y docker.io
+sudo apt install -y git
 
 # Enable and start Docker service
 sudo systemctl enable docker
