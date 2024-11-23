@@ -99,9 +99,9 @@ http://<server_ip>:8000
 
 You will be prompted to enter a username and password. The default credentials are:
 
-Username: supabase
+**Username:** `supabase`
 
-Password: this_password_is_insecure_and_should_be_updated
+**Password:** `this_password_is_insecure_and_should_be_updated`
 
 ### 10. Troubleshooting: Storage Error
 If you encounter an error stating that storage is missing, you can manually create the storage volume by running:
