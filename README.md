@@ -9,101 +9,33 @@ This guide will walk you through setting up Supabase using Docker on your local 
 - Docker
 - Docker Compose
 
-## Installation Steps
+### **What the Script Does**
 
-### 1. Update Your System
+This script automates the setup and deployment of a self-hosted Supabase instance on a Linux system. It begins by preparing the environment, then proceeds to download, configure, and launch all the necessary components for Supabase to run.
 
-Before starting, make sure your system is up to date:
+Here's a step-by-step breakdown of the script's actions:
 
-```bash
-sudo apt update && sudo apt upgrade -y
-```
+1.  **System Preparation**: The script starts by updating the system's package list and upgrading all installed packages to their latest versions using `sudo apt update && sudo apt upgrade -y`. This ensures a stable and secure base for the new software.
 
-### 2. Install Docker and Git
-Next, install Docker and Git on your machine:
+2.  **Dependency Installation**: It then installs **Docker**, a containerization platform, and **Git**, a version control system (`sudo apt install docker.io git`). Docker is essential for running the containerized Supabase services, and Git is used to download the Supabase source code. After installation, the script ensures the Docker service is enabled to start on boot and then starts it with `sudo systemctl enable docker` and `sudo systemctl start docker`.
 
-```bash
-sudo apt install docker.io git
-```
-Once installed, enable and start Docker:
+3.  **Docker Compose Setup**: The script downloads the standalone **Docker Compose** binary. This tool is used to define and run multi-container Docker applications. It places the binary in a system-wide accessible location (`/usr/local/bin/docker-compose`) and makes it executable (`chmod +x docker-compose`), allowing it to be run from any directory.
 
-```bash
-sudo systemctl enable docker
-sudo systemctl start docker
-```
-### 3. Install Docker Compose (Standalone)
-Download the standalone version of [Docker Compose](https://docs.docker.com/compose/install/standalone/):
+4.  **Source Code Retrieval**: It clones the official Supabase repository from GitHub using `git clone --depth 1 https://github.com/supabase/supabase`. The `--depth 1` flag ensures a shallow clone, downloading only the most recent version of the code to save time and space. The script then navigates into the `supabase/docker` directory, which contains the necessary configuration for a Docker-based setup.
 
-```bash
-curl -SL https://github.com/docker/compose/releases/download/v2.29.6/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-```
-Navigate to the directory and make the file executable:
+5.  **Configuration**: The script creates a new environment configuration file, `.env`, by copying the provided example file (`cp .env.example .env`). This file holds all the configuration variables, such as API keys and database credentials, that Supabase needs to run.
 
-```bash
-cd /usr/local/bin
-chmod +x docker-compose
-cd
-```
+6.  **Image Download**: It then uses `docker-compose pull` to download all the required Docker images from the registry. These are pre-built images containing the various microservices that make up the Supabase stack, including the database, authentication server, and API gateway.
 
-### 4. Clone the Supabase Repository
+7.  **Service Launch**: With the configuration in place and images downloaded, the script starts all the Supabase services in detached mode (`-d`) using `docker-compose up -d`, meaning they will run in the background.
 
-Clone the Supabase repository from GitHub to get the necessary code:
+8.  **Verification**: Finally, the script checks and displays the status of all the running Docker containers with `docker-compose ps`, allowing you to verify that every component of the Supabase stack has started correctly.
 
-```bash
-git clone --depth 1 https://github.com/supabase/supabase
-```
-Navigate to the Docker folder inside the Supabase directory:
+***
 
-```bash
-cd supabase/docker
-```
-### 5. Set Up Environment Variables
-Supabase requires environment variables for configuration. Copy the example environment variables file:
+Once the script completes, a full Supabase instance will be running and accessible via a web browser at the server's IP address on port `8000`.
 
-```bash
-cp .env.example .env
-```
-You can customize the .env file later to suit your specific requirements.
-
-### 6. Pull the Latest Docker Images
-Before starting the services, ensure you have the latest Docker images for Supabase:
-
-```bash
-docker-compose pull
-```
-### 7. Start Supabase Services
-Start the services using Docker Compose in detached mode:
-
-```bash
-docker-compose up -d
-```
-
-This will start all required services, including the Supabase database and other backend services.
-
-### 8. Verify Service Status
-Check the status of the services to ensure everything is running correctly:
-
-
-```bash
-docker-compose ps
-```
-
-You should see the list of running containers and their statuses.
-
-### 9. Access the Supabase Dashboard
-Once the services are up and running, you can access the Supabase dashboard by going to the following URL in your browser:
-
-```bash
-http://<server_ip>:8000
-```
-
-You will be prompted to enter a username and password. The default credentials are:
-
-**Username:** `supabase`
-
-**Password:** `this_password_is_insecure_and_should_be_updated`
-
-### 10. Troubleshooting: Storage Error
+### Troubleshooting: Storage Error
 If you encounter an error stating that storage is missing, you can manually create the storage volume by running:
 
 ```bash
