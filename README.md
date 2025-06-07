@@ -33,8 +33,10 @@ Here's a step-by-step breakdown of the script's actions:
 
 ***
 
-Once the script completes, a full Supabase instance will be running and accessible via a web browser at the server's IP address on port `8000`.
+Once the script completes, a full Supabase instance will be running and accessible via a web browser at the **server's IP address** on port `8000`. To log in to the dashboard, use the default credentials:
 
+**Username:** `supabase`
+**Password:** `this_password_is_insecure_and_should_be_updated`
 ### Troubleshooting: Storage Error
 If you encounter an error stating that storage is missing, you can manually create the storage volume by running:
 
